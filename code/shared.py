@@ -1,14 +1,14 @@
+import os
 from pathlib import Path
+from zipfile import ZipFile
 
 import geopandas as gpd
 import xarray as xr
-from distributed import Client
-from zipfile import ZipFile
-from pyCIAM import __file__
 from cloudpathlib import AnyPath
-from dask_gateway import GatewayCluster
-import os
 from dask.distributed import PipInstall
+from dask_gateway import GatewayCluster
+from distributed import Client
+from pyCIAM import __file__
 
 # DIR_SCRATCH = Path("/tmp/ciam-scratch")
 DIR_SCRATCH = AnyPath("gs://rhg-data-scratch/ciam-scratch")
@@ -57,9 +57,13 @@ PATH_PARAMS = Path.home() / "git-repos/pyCIAM-public/params.json"
 # SLIIDERS
 
 # PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
-PATH_SLIIDERS = AnyPath("gs://rhg-data/impactlab-rhg/coastal/sliiders/output/sliiders-v1.2.zarr")
+PATH_SLIIDERS = AnyPath(
+    "gs://rhg-data/impactlab-rhg/coastal/sliiders/output/sliiders-v1.2.zarr"
+)
 
-PATH_SLIIDERS_SEG = PATH_SLIIDERS.parent / (PATH_SLIIDERS.stem + "-seg" + PATH_SLIIDERS.suffix)
+PATH_SLIIDERS_SEG = PATH_SLIIDERS.parent / (
+    PATH_SLIIDERS.stem + "-seg" + PATH_SLIIDERS.suffix
+)
 
 #####
 # SLR
@@ -181,9 +185,13 @@ def read_shapefile(path, **kwargs):
 
 def start_dask_cluster(profile="micro", upload_pip_pkgs=True, **kwargs):
     img = os.environ["JUPYTER_IMAGE"]
-    cluster = GatewayCluster(profile=profile, worker_image=img, scheduler_image=img, **kwargs)
+    cluster = GatewayCluster(
+        profile=profile, worker_image=img, scheduler_image=img, **kwargs
+    )
     client = cluster.get_client()
-    plugin = PipInstall(packages=["cloudpathlib", "python-snappy", "pyogrio", "rhg_compute_tools"])
+    plugin = PipInstall(
+        packages=["cloudpathlib", "python-snappy", "pyogrio", "rhg_compute_tools"]
+    )
     if upload_pip_pkgs:
         if hasattr(client, "register_plugin"):
             client.register_plugin(plugin)
