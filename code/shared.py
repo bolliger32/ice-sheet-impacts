@@ -3,10 +3,15 @@ from pathlib import Path
 import geopandas as gpd
 import xarray as xr
 from distributed import Client
-from distributed.diagnostics.plugin import UploadDirectory
+from zipfile import ZipFile
 from pyCIAM import __file__
+from cloudpathlib import AnyPath
+from dask_gateway import GatewayCluster
+import os
+from dask.distributed import PipInstall
 
-DIR_SCRATCH = Path("/tmp/ciam-scratch")
+# DIR_SCRATCH = Path("/tmp/ciam-scratch")
+DIR_SCRATCH = AnyPath("gs://rhg-data-scratch/ciam-scratch")
 
 SLIIDERS_VERS = "v1.2"
 RES_VERS = "IS_v0.1"
@@ -32,9 +37,10 @@ CONTACT = "ian@reask.earth"
 ##################
 # ROOT DIRECTORIES
 ##################
-DIR_HOME = Path("../")
+# DIR_HOME = Path("../")
+DIR_HOME = AnyPath("gs://rhg-data/impactlab-rhg/coastal/ice-sheet-impacts")
 DIR_DATA = DIR_HOME / "data"
-DIR_RAW = DIR_DATA / "raw"
+# DIR_RAW = DIR_DATA / "raw"
 DIR_INT = DIR_DATA / "int"
 DIR_RES = DIR_HOME / f"results-{RES_VERS}"
 
@@ -49,20 +55,23 @@ PATH_PARAMS = Path.home() / "git-repos/pyCIAM-public/params.json"
 ##################
 
 # SLIIDERS
-PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
-PATH_SLIIDERS_SEG = DIR_INT / f"sliiders-{SLIIDERS_VERS}-seg.zarr"
+
+# PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
+PATH_SLIIDERS = AnyPath("gs://rhg-data/impactlab-rhg/coastal/sliiders/output/sliiders-v1.2.zarr")
+
+PATH_SLIIDERS_SEG = PATH_SLIIDERS.parent / (PATH_SLIIDERS.stem + "-seg" + PATH_SLIIDERS.suffix)
 
 #####
 # SLR
 #####
-
-DIR_SLR_RAW = DIR_RAW / "slr"
+DIR_SLR = AnyPath("gs://rhg-data/impactlab-rhg/coastal/ciam_paper/data")
+DIR_SLR_RAW = DIR_SLR / "raw" / "slr"
 DIR_SLR_INT = DIR_INT / "slr"
 
 DIR_SLR_AR6_RAW = DIR_SLR_RAW / "ar6"
-DIR_SLR_IS_RAW = DIR_SLR_RAW / "ice-sheet-contributions"
-PATH_SLR_IS_RAW = DIR_SLR_IS_RAW / "ice-sheet-contributions.parquet"
-PATH_SLR_INT = DIR_SLR_INT / "msl-rel-2005.zarr"
+# PATH_SLR_IS_RAW = DIR_SLR_RAW / "ice-sheet-contributions.parquet"
+PATH_SLR_IS_RAW = AnyPath("../data/raw/slr/ice-sheet-contributions.parquet")
+PATH_SLR_INT = DIR_SLR_INT / "msl-rel-2005-is.zarr"
 
 
 ###########################
@@ -90,48 +99,48 @@ for p in [
     p.mkdir(exist_ok=True, parents=True)
 
 
-def upload_pyciam(client, restart_client=True):
-    """Upload a local package to Dask Workers. After calling this function, the package
-    contained at ``pkg_dir`` will be available on all workers in your Dask cluster,
-    including those that are instantiated afterward. This package will take priority
-    over any existing packages of the same name. This is a useful tool for working with
-    remote dask clusters (e.g. via Dask Gateway) but is not needed for local clusters.
-    If you wish to use this, you should call this function from within
-    `start_dask_cluster`.
+def _zipdir(
+    path,
+    zip_filename,
+    skip_files=(
+        ".git",
+        ".github",
+        ".pytest_cache",
+        "tests",
+        "docs",
+        "deploy",
+        "notebooks",
+        ".ipynb_checkpoints",
+        "__pycache__",
+        ".coverage",
+        "dockerignore",
+        ".gitignore",
+        ".gitlab-ci.yml",
+        ".gitmodules",
+        "pyclaw.log",
+        "run_tests.sh",
+    ),
+):
 
-    Parameters
-    ----------
-    client : :py:class:`distributed.Client`
-        The client object associated with your Dask cluster's scheduler.
-    pkg_dir : str or Path-like
-        Path to the package you wish to zip and upload
-    **kwargs
-        Passed directly to :py:class:`distributed.diagnostics.plugin.UploadDirectory`
-    """
-    client.register_worker_plugin(
-        UploadDirectory(
-            Path(__file__).parents[1],
-            update_path=True,
-            restart=restart_client,
-            skip_words=(
-                ".git",
-                ".github",
-                ".pytest_cache",
-                "tests",
-                "docs",
-                "deploy",
-                "notebooks",
-                ".ipynb_checkpoints",
-                "__pycache__",
-                ".coverage",
-                "dockerignore",
-                ".gitignore",
-                ".gitlab-ci.yml",
-                ".gitmodules",
-                "pyclaw.log",
-            ),
-        )
-    )
+    with ZipFile(zip_filename, "w") as ziph:
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if any([f in file.split("/") for f in skip_files]):
+                    continue
+                # Create a relative path for files to preserve the directory structure
+                # within the ZIP archive. This relative path is based on the directory
+                # being zipped, so files are stored in the same structure.
+                relative_path = os.path.relpath(
+                    os.path.join(root, file), os.path.join(path, "..")
+                )
+                ziph.write(os.path.join(root, file), arcname=relative_path)
+
+
+def upload_pyciam(client):
+    package_dir = Path(__file__).parent
+    zip_filename = "/tmp/pyCIAM.zip"  # Output ZIP file name
+    _zipdir(package_dir, zip_filename)
+    client.upload_file(zip_filename)
 
 
 def save(obj, path, *args, **kwargs):
@@ -170,7 +179,15 @@ def read_shapefile(path, **kwargs):
     return gpd.read_file(_path, **kwargs)
 
 
-def start_dask_cluster(**kwargs):
-    client = Client(**kwargs)
-    print(client.dashboard_link)
-    return client
+def start_dask_cluster(profile="micro", upload_pip_pkgs=True, **kwargs):
+    img = os.environ["JUPYTER_IMAGE"]
+    cluster = GatewayCluster(profile=profile, worker_image=img, scheduler_image=img, **kwargs)
+    client = cluster.get_client()
+    plugin = PipInstall(packages=["cloudpathlib", "python-snappy", "pyogrio", "rhg_compute_tools"])
+    if upload_pip_pkgs:
+        if hasattr(client, "register_plugin"):
+            client.register_plugin(plugin)
+        else:
+            client.register_worker_plugin(plugin)
+        upload_pyciam(client)
+    return client, cluster
