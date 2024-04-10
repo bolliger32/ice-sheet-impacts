@@ -5,23 +5,22 @@ from zipfile import ZipFile
 import geopandas as gpd
 import xarray as xr
 from cloudpathlib import AnyPath
-from dask.distributed import PipInstall
 from dask_gateway import GatewayCluster
-from distributed import Client
 from pyCIAM import __file__
+from typing import Dict
 
 # DIR_SCRATCH = Path("/tmp/ciam-scratch")
 DIR_SCRATCH = AnyPath("gs://rhg-data-scratch/ciam-scratch")
 
 SLIIDERS_VERS = "v1.2"
-RES_VERS = "IS_v0.1"
+RES_VERS = "IS_v0.2"
 
 # what are the GMSL values associated with the ice sheet contributions
 IS_GMSL = 2.35
 
 # Cloud Storage tools (will work with local storage as well but may need to be specifiec
 # for cloud buckets
-STORAGE_OPTIONS = {}
+STORAGE_OPTIONS: Dict[str, str] = {}
 
 
 def _to_fuse(path):
@@ -29,7 +28,9 @@ def _to_fuse(path):
 
 
 # Output dataset attrs
-HISTORY = """version IS-v0.1: Version associated with Huprikar et al., 2024"""
+HISTORY = """version IS-v0.1: Version associated with Huprikar et al., 2024
+version IS-v0.1.1: Bugfix on SLR in years 2005-2019
+version IS-v0.2: Using 2% discount rate and updated 7.6 movefactor (instead of 8.8)"""
 AUTHOR = "Ian Bolliger"
 CONTACT = "ian@reask.earth"
 
@@ -48,7 +49,7 @@ DIR_RES = DIR_HOME / f"results-{RES_VERS}"
 # MODEL PARAMS
 ##################
 
-PATH_PARAMS = Path.home() / "git-repos/pyCIAM-public/params.json"
+PATH_PARAMS = Path.home() / "git-repos/ice-sheet-impacts/code/params.json"
 
 ##################
 # SOCIOECON INPUTS
@@ -183,19 +184,11 @@ def read_shapefile(path, **kwargs):
     return gpd.read_file(_path, **kwargs)
 
 
-def start_dask_cluster(profile="micro", upload_pip_pkgs=True, **kwargs):
+def start_dask_cluster(profile="micro", **kwargs):
     img = os.environ["JUPYTER_IMAGE"]
     cluster = GatewayCluster(
         profile=profile, worker_image=img, scheduler_image=img, **kwargs
     )
     client = cluster.get_client()
-    plugin = PipInstall(
-        packages=["cloudpathlib", "python-snappy", "pyogrio", "rhg_compute_tools"]
-    )
-    if upload_pip_pkgs:
-        if hasattr(client, "register_plugin"):
-            client.register_plugin(plugin)
-        else:
-            client.register_worker_plugin(plugin)
-        upload_pyciam(client)
+    upload_pyciam(client)
     return client, cluster
