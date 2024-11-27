@@ -1,5 +1,8 @@
-from distributed import Client
+"""Parameters and common functions to be used in notebook-based analysis workflow."""
+
 from pathlib import Path
+
+from distributed import Client
 
 DIR_SCRATCH = Path("/tmp")
 
@@ -24,7 +27,7 @@ DIR_HOME = Path("/")
 DIR_DATA = DIR_HOME / "data"
 DIR_RAW = DIR_DATA / "raw"
 DIR_INT = DIR_DATA / "int"
-DIR_RES = DIR_HOME / f"results"
+DIR_RES = DIR_HOME / "results"
 DIR_FIGS = DIR_RES / "figures"
 
 ##################
@@ -78,10 +81,12 @@ PATH_REFA = DIR_INT / f"refA_by_movefactor_{SLIIDERS_VERS}.zarr"
 #########
 
 PATH_OUTPUTS = DIR_INT / f"pyCIAM_{RES_VERS}_results.zarr"
-PATHS_MAPS = {kind: DIR_FIGS / f"SCISM-maps-{kind}.png" for kind in ["absolute", "normalized"]}
+PATHS_MAPS = {
+    kind: DIR_FIGS / f"SCISM-maps-{kind}.png" for kind in ["absolute", "normalized"]
+}
 OUTPUT_SCISM = DIR_RES / "SCISM.zarr"
 OUTPUT_BASELINE_COSTS = DIR_RES / "baseline-costs.zarr"
-PATH_BOXWHISKER = DIR_FIGS / 'SCISM_allSSPIAM_slrAR6_boxplot_optimal.png'
+PATH_BOXWHISKER = DIR_FIGS / "SCISM_allSSPIAM_slrAR6_boxplot_optimal.png"
 
 # Make directories where needed
 for p in [
@@ -90,9 +95,13 @@ for p in [
 ]:
     p.mkdir(exist_ok=True, parents=True)
 
+
 def start_dask_cluster():
-    # Code Ocean capsules run on 16-core machines by default.
-    # This function can be changed to match your specs if running elsewhere
+    """Instantiate dask distributed client and cluster.
+
+    Code Ocean capsules run on 16-core machines by default. This function can be changed
+    to match your specs if running elsewhere.
+    """
     client = Client(n_workers=16)
     cluster = client.cluster
     return client, cluster
