@@ -1,0 +1,35 @@
+channels:
+    - conda-forge
+dependencies:
+    - bottleneck
+    - cachey
+    - cartopy
+    - cloudpathlib
+    - dask-expr
+    - dask-labextension
+    - distributed
+    - exactextract # remove if using regionmask
+    - flox
+    - gitpython
+    - geopandas
+    - ipywidgets
+    - jupyterlab
+    - lz4
+    - matplotlib
+    - netcdf4
+    - numbagg
+    - opt_einsum
+    - papermill
+    - pint-xarray
+    - pip
+    - psutil
+    - pyarrow
+    - python-snappy
+    - regionmask # remove if using exactextract
+    - rioxarray
+    - scikit-learn
+    - seaborn
+    - xarray
+    - zarr
+    - pip:
+        - libarchive-c

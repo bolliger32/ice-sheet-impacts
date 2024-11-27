@@ -25,6 +25,7 @@ DIR_DATA = DIR_HOME / "data"
 DIR_RAW = DIR_DATA / "raw"
 DIR_INT = DIR_DATA / "int"
 DIR_RES = DIR_HOME / f"results"
+DIR_FIGS = DIR_RES / "figures"
 
 ##################
 # MODEL PARAMS
@@ -41,6 +42,8 @@ PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
 PATH_SLIIDERS_SEG = PATH_SLIIDERS.parent / (
     PATH_SLIIDERS.stem + "-seg" + PATH_SLIIDERS.suffix
 )
+PATH_YPK_HIST = DIR_RAW / "ypk_2000_2020_20240222.parquet"
+PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.zarr"
 
 #####
 # SLR
@@ -52,6 +55,13 @@ DIR_SLR_AR6_RAW = DIR_SLR_RAW / "ar6"
 PATH_SLR_IS_RAW = DIR_RAW / "ice-sheet-contributions.parquet"
 PATH_SLR_INT = DIR_SLR_INT / "msl-rel-2005-is.zarr"
 
+#########
+# SPATIAL
+#########
+
+PATH_GADM = DIR_RAW / "gadm_410-levels.gpkg"
+PATH_LANDSCAN = DIR_RAW / "landscan-global-2022.tif"
+PATH_ADM1_REGIONS = DIR_INT / "adm1-regions.parquet"
 
 ###########################
 # PYCIAM INTERMEDIATE FILES
@@ -63,17 +73,20 @@ for seg in ["seg_adm", "seg"]:
 
 PATH_REFA = DIR_INT / f"refA_by_movefactor_{SLIIDERS_VERS}.zarr"
 
-###########################
-# PYCIAM OUTPUTS
-###########################
+#########
+# OUTPUTS
+#########
 
-PATH_OUTPUTS = DIR_RES / f"pyCIAM_{RES_VERS}_results.zarr"
-
+PATH_OUTPUTS = DIR_INT / f"pyCIAM_{RES_VERS}_results.zarr"
+PATHS_MAPS = {kind: DIR_FIGS / f"SCISM-maps-{kind}.png" for kind in ["absolute", "normalized"]}
+OUTPUT_SCISM = DIR_RES / "SCISM.zarr"
+OUTPUT_BASELINE_COSTS = DIR_RES / "baseline-costs.zarr"
+PATH_BOXWHISKER = DIR_FIGS / 'SCISM_allSSPIAM_slrAR6_boxplot_optimal.png'
 
 # Make directories where needed
 for p in [
     DIR_SCRATCH,
-    DIR_RES,
+    DIR_FIGS,
 ]:
     p.mkdir(exist_ok=True, parents=True)
 

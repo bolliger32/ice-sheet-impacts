@@ -13,3 +13,5 @@ papermill 2-collapse-sliiders-to-seg.ipynb
 # papermill 3-create-surge-lookup-tables.ipynb
 
 papermill 4-run-pyCIAM.ipynb
+
+papermill 5-generate-manuscript-content.ipynb
