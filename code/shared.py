@@ -63,7 +63,7 @@ PATH_SLR_INT = DIR_SLR_INT / "msl-rel-2005-is.zarr"
 #########
 
 PATH_GADM = DIR_RAW / "gadm_410-levels.gpkg"
-PATH_LANDSCAN = DIR_RAW / "landscan-global-2022.tif"
+PATH_LANDSCAN = DIR_RAW / "landscan-global-2020.tif"
 PATH_ADM1_REGIONS = DIR_INT / "adm1-regions.parquet"
 
 ###########################
