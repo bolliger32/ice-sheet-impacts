@@ -14,4 +14,4 @@ papermill 2-collapse-sliiders-to-seg.ipynb
 
 papermill 4-run-pyCIAM.ipynb
 
-papermill 5-generate-manuscript-content.ipynb
+papermill 5-generate-manuscript-content.ipynb -p DPI=300

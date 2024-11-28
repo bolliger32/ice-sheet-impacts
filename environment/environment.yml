@@ -1,35 +1,33 @@
 channels:
     - conda-forge
 dependencies:
-    - bottleneck
-    - cachey
-    - cartopy
-    - cloudpathlib
-    - dask-expr
-    - dask-labextension
-    - distributed
-    - exactextract # remove if using regionmask
-    - flox
-    - gitpython
-    - geopandas
-    - ipywidgets
-    - jupyterlab
-    - lz4
-    - matplotlib
-    - netcdf4
-    - numbagg
-    - opt_einsum
-    - papermill
-    - pint-xarray
-    - pip
-    - psutil
-    - pyarrow
-    - python-snappy
-    - regionmask # remove if using exactextract
-    - rioxarray
-    - scikit-learn
-    - seaborn
-    - xarray
-    - zarr
+    - bottleneck=1.4.2
+    - cachey=0.2.1
+    - cartopy=0.24.0
+    - colorcet=3.1.0
+    - dask-expr=1.1.19
+    - dask-labextension=7.0.0
+    - distributed=2024.11.2
+    - exactextract=0.2.0
+    - flox=0.9.15
+    - gitpython=3.1.43
+    - geopandas=1.0.1
+    - jupyterlab=4.3.1
+    - lz4=4.3.3
+    - matplotlib=3.9.2
+    - netcdf4=1.7.1
+    - numbagg=0.8.2
+    - opt_einsum=3.4.0
+    - papermill=2.6.0
+    - pint-xarray=0.4
+    - pip=24.3.1
+    - psutil=6.1.0
+    - pyarrow=18.1.0
+    - python-snappy=0.7.3
+    - rioxarray=0.17.0
+    - scikit-learn=1.5.2
+    - seaborn=0.13.2
+    - xarray=2024.11.0
+    - zarr=2.18.3
     - pip:
-        - libarchive-c
+        - libarchive-c==5.1
