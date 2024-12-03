@@ -23,4 +23,4 @@ run_nb /code/2-collapse-sliiders-to-seg.ipynb
 
 run_nb /code/4-run-pyCIAM.ipynb
 
-run_nb /code/5-generate-manuscript-content.ipynb -p DPI 300
+run_nb /code/5-generate-manuscript-content.ipynb -p DPI 300 -p PLOT_TEXT False
