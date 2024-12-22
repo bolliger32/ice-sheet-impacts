@@ -1,0 +1,79 @@
+metadata_version: 1
+name: Quantifying Asymmetries in Flood Area and Population Exposure Between Sea Level
+  Fingerprints of Melting From the Antarctic and Greenland Ice Sheets
+description: Code and data associated with the manuscript by the same name. This analysis
+  investigates differential flooding-related impacts from melting of the Antarctic
+  and Greenland Ice Sheets. It investigates magnitude of population and land area
+  flooded by each source, along with an assessment of the associated costs, based
+  on the pyCIAM model (Depsky et al., 2023).
+tags:
+- sea level rise
+- Climate Change
+- Societal Impact
+authors:
+- name: Ian Bolliger
+  affiliations:
+  - name: Reask
+- name: Gabriel Cederberg
+  affiliations:
+  - name: Harvard University
+- name: Sonke Dangendorf
+  affiliations:
+  - name: Tulane University
+- name: Nicholas Depsky
+  affiliations:
+  - name: United Nations Development Programme
+- name: A. Huprikar
+  affiliations:
+  - name: Harvard University
+- name: Robert E. Kopp
+  affiliations:
+  - name: Rutgers, The State University of New Jersey
+- name: Jerry X. Mitrovica
+  affiliations:
+  - name: Harvard University
+- name: M. Yu
+  affiliations:
+  - name: Harvard University
+- name: M. A. Abdrabo
+  affiliations:
+  - name: Alexandria University
+- name: M. A. Hassaan
+  affiliations:
+  - name: Alexandria University
+- name: Solomon Hsiang
+  affiliations:
+  - name: Stanford University
+- name: Peter Huybers
+  affiliations:
+  - name: Harvard University
+- name: E. R. Kennedy-Yoon
+  affiliations:
+  - name: Harvard University
+- name: M. Kitch
+  affiliations:
+  - name: Harvard University
+- name: M. Lickley
+  affiliations:
+  - name: Georgetown University
+- name: S. K. Ludtke
+  affiliations:
+  - name: Harvard University
+- name: C. Mulvey
+  affiliations:
+  - name: Harvard University
+- name: R. H. Murdock
+  affiliations:
+  - name: Harvard University
+- name: R. Ragavan
+  affiliations:
+  - name: Harvard University
+- name: N. Valencic
+  affiliations:
+  - name: Harvard University
+- name: C. A. Waltenberg
+  affiliations:
+  - name: Harvard University
+corresponding_contributor:
+  name: Ian Bolliger
+  email: ian@reask.earth
