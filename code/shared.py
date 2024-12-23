@@ -42,9 +42,7 @@ PATH_PARAMS = Path("params.json")
 
 # SLIIDERS
 PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
-PATH_SLIIDERS_SEG = PATH_SLIIDERS.parent / (
-    PATH_SLIIDERS.stem + "-seg" + PATH_SLIIDERS.suffix
-)
+PATH_SLIIDERS_SEG = DIR_INT / f"sliiders-{SLIIDERS_VERS}-seg.zarr"
 PATH_YPK_HIST = DIR_RAW / "ypk_2000_2020_20240222.parquet"
 PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.zarr"
 
