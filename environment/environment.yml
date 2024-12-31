@@ -31,3 +31,4 @@ dependencies:
     - zarr=2.18.3
     - pip:
         - libarchive-c==5.1
+        - python-ciam==1.2.3
