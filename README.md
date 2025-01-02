@@ -1,10 +1,12 @@
 # Quantifying Asymmetries in Flood Area and Population Exposure Between Sea Level Fingerprints of Melting From the Antarctic and Greenland Ice Sheets
 
-This repository provides the code required to produce the figures appearing in the main text and Supplementary Materials of:
+This repository provides the code required to produce the economic impact figures (Figures 5-7 and S5-S8, as well as a variety of quantities referenced in the main text) included in:
 
 Bolliger et al., "Quantifying Asymmetries in Flood Area and Population Exposure Between Sea Level Fingerprints of Melting From the Antarctic and Greenland Ice Sheets," *Under Review*.
 
-If you are viewing this repository on Github, please also see our Code Ocean capsule [ADD LINK], where you will find a mirror of this repository along with data and a computing environment set up to execute the analysis. You may interact with the code via this platform or simply download the data for use on your own platform.
+If you are viewing this repository on Github, please also see our Code Ocean capsule (link coming soon), where you will find a mirror of this repository along with data and a computing environment set up to execute the analysis. You may interact with the code via this platform or simply download the data for use on your own platform.
+
+Code and data associated with all other figures and quantities in the manuscript are located at [https://doi.org/10.5281/zenodo.14567047](https://doi.org/10.5281/zenodo.14567047). The remainder of this README will focus on the analysis included in this repository, while you may find separate instructions for replicating the rest of the study at the aforementioned DOI.
 
 ## Installation
 
@@ -14,15 +16,15 @@ To reproduce the analyses in the associated paper via Code Ocean, you will likel
 
 If you choose to replicate the analysis on a different platform, you will separately need to obtain three things: code, data, and an appropriate computing environment:
 
-## Code
+### Code
 
 You should clone this repository, which is mirrored on [Github](https://github.com/bolliger32/ice-sheet-impacts) and Code Ocean. Either source is appropriate to clone as they contain the same code. You may need to modify some of the filepaths in [shared.py](code/shared.py) to reflect the location of data on your local machine if you modify it from the default location (see below).
 
-## Data
+### Data
 
 When viewing our Code Ocean capsule, hover over `data` and click the caret that appears. You will see an option to download this folder. Place this downloaded `data` folder in the root directory of this repository (i.e. at the same level as the `code/` folder). Alternatively, you may place a symlink at that location that points to this data folder. Alternatively, the [download-input-data.py](environment/download-input-data.py) script will download the majority of these files. The LANDSCAN dataset requires non-programmatic (point-and-click) downloads, while [ypk_2000_2020_20240222.parquet](data/raw/ypk_2000_2020_20240222.parquet) and [ice-sheet-contributions.parquet](data/raw/ice-sheet-contributions.parquet) are not otherwise publicly available and must be downloaded from the Code Ocean capsule.
 
-### Data Description
+#### Data Description
 
 The following files are included in the Code Ocean capsule under [data/raw](data/raw) and are needed to execute the analysis (links will work only on the Code Ocean capsule):
 
@@ -46,7 +48,7 @@ If you would instead like to execute this code within a Docker container, you ma
 
 ## Outputs
 
-Consistent with the Code Ocean capsule structure, this repo is designed to output figures used in Bolliger et al. (2023) in a `results/figures` folder, relative to the root directory.
+Consistent with the Code Ocean capsule structure, this repo is designed to output figures in a `results/figures` folder, relative to the root directory.
 
 ## Use of code and data
 
