@@ -13,10 +13,6 @@ RUN conda update --all -y && \
     conda env update -n base -f=/environment.yml && \
     conda clean -ya
 
-RUN pwd
-RUN pip install --src / --no-cache-dir -e \
-    git+https://github.com/ClimateImpactLab/pyCIAM@bugfix/more-dep-fixes#egg=python-ciam
-
 ENV DASK_LABEXTENSION__DEFAULT__WORKERS=16
 ENV DASK_DISTRIBUTED__DASHBOARD__LINK="proxy/{port}/status"
 ENV DASK_DISTRIBUTED__WORKER__MEMORY__SPILL=0.98
