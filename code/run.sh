@@ -4,7 +4,7 @@ set -ex
 # This is the master script for the capsule. When you click "Reproducible Run", the code in this file will execute.
 
 run_nb() {
-    NBPATH=$1
+    NBPATH=/code/$1.ipynb
     OUTPATH=${NBPATH/"code"/"results/notebook-output"}
     mkdir -p $(dirname "$OUTPATH")
     shift
@@ -13,14 +13,14 @@ run_nb() {
         "$@"
 }
 
-run_nb /code/1-combine-slr-data.ipynb
+run_nb 1-combine-slr-data
 
-run_nb /code/2-collapse-sliiders-to-seg.ipynb
+run_nb 2-collapse-sliiders-to-seg
 
 # these intermediate data files take awhile to create and thus are included in the capsule as pre-generated data.
 # you may run this script to re-create them if you wish
 # papermill 3-create-surge-lookup-tables.ipynb
 
-run_nb /code/4-run-pyCIAM.ipynb
+run_nb 4-run-pyCIAM
 
-run_nb /code/5-generate-manuscript-content.ipynb -p DPI 300 -p PLOT_TEXT False
+run_nb 5-generate-manuscript-content
