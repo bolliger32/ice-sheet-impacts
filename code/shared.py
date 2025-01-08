@@ -50,11 +50,10 @@ PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.zarr"
 # SLR
 #####
 DIR_SLR_RAW = DIR_RAW / "slr"
-DIR_SLR_INT = DIR_INT / "slr"
 
 DIR_SLR_AR6_RAW = DIR_SLR_RAW / "ar6"
-PATH_SLR_IS_RAW = DIR_RAW / "ice-sheet-contributions.parquet"
-PATH_SLR_INT = DIR_SLR_INT / "msl-rel-2005-is.zarr"
+PATH_SLR_IS_RAW = DIR_SLR_RAW / "ice-sheet-contributions.parquet"
+PATH_SLR_INT = DIR_INT / "msl-rel-2005-is.zarr"
 
 #########
 # SPATIAL
@@ -94,12 +93,12 @@ for p in [
     p.mkdir(exist_ok=True, parents=True)
 
 
-def start_dask_cluster():
+def start_dask_cluster(n_workers=8):
     """Instantiate dask distributed client and cluster.
 
     Code Ocean capsules run on 16-core machines by default. This function can be changed
     to match your specs if running elsewhere.
     """
-    client = Client(n_workers=16)
+    client = Client(n_workers=n_workers)
     cluster = client.cluster
     return client, cluster
