@@ -7,33 +7,23 @@ capsule. Thus, this script is included for transparency but does not need to be 
 of the capsule.
 """
 
-from pathlib import Path
-
 import requests
 import shared
+from cloudpathlib import AnyPath
 from fsspec.implementations.libarchive import LibArchiveFileSystem
 from pyCIAM.io import (
     download_and_extract_from_zenodo,
     download_and_extract_partial_zip,
 )
-from rioxarray import open_rasterio
 
-# ######
-# PARAMS
-# ######
-DIR_RAW = Path("/root/capsule/data/raw")
-
-PATH_SLIIDERS = DIR_RAW / "sliiders-v1.2.zarr"
-PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.zarr"
-PATH_GADM = DIR_RAW / "gadm_410-levels.gpkg"
-DIR_SLR_RAW = DIR_RAW / "slr"
-DIR_SLR_AR6_RAW = DIR_SLR_RAW / "ar6"
-
+# ##############
 # ZENODO SOURCES
+# ##############
+
 Z_URL_RECORDS = "https://zenodo.org/api/records/{doi}"
 Z_SLIIDERS_DOI = "10714387"
-Z_PYCIAM_DOI = "8229860"
 Z_AR6_DOI = "6382554"
+Z_WANG_SUN_DOI = "7898409"
 
 # #########
 # DOWNLOADS
@@ -43,13 +33,13 @@ Z_AR6_DOI = "6382554"
 with LibArchiveFileSystem(
     "https://zenodo.org/records/7898409/files/GDP_2010-2010.7z"
 ).open("GDP_2010-2010/GDP2020.tif", "rb") as file:
-    open_rasterio(file, mask_and_scale=True).squeeze(drop=True).to_zarr(
-        shared.PATH_GRIDDED_GDP
-    )
+    shared.PATH_GRIDDED_GDP.write_bytes(file.read())
 
 # download SLIIDERS
 sliiders_files = requests.get(Z_URL_RECORDS.format(doi=Z_SLIIDERS_DOI)).json()["files"]
-download_and_extract_from_zenodo(shared.PATH_SLIIDERS, sliiders_files, "sliiders-v")
+download_and_extract_from_zenodo(
+    AnyPath(shared.PATH_SLIIDERS), sliiders_files, "sliiders-v"
+)
 
 # download AR6 SLR data
 ar6_files = requests.get(Z_URL_RECORDS.format(doi=Z_AR6_DOI)).json()["files"]
