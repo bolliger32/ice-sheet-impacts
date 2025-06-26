@@ -23,4 +23,6 @@ run_nb 2-collapse-sliiders-to-seg
 
 run_nb 4-run-pyCIAM
 
-run_nb 5-generate-manuscript-content
+run_nb 5-generate-manuscript-content -p DR 0.015
+run_nb 5-generate-manuscript-content -p DR 0.02
+run_nb 5-generate-manuscript-content -p DR 0.03
