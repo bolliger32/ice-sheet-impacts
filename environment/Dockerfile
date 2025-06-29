@@ -7,8 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 COPY environment.yml /
 
 RUN conda update --all -y && \
-    conda install conda=24 && \
-    conda install python=3.12 && \
+    conda install python=3.13 && \
     conda update --all && \
     conda env update -n base -f=/environment.yml && \
     conda clean -ya
