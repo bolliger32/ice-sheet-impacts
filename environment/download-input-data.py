@@ -23,7 +23,6 @@ from pyCIAM.io import (
 Z_URL_RECORDS = "https://zenodo.org/api/records/{doi}"
 Z_SLIIDERS_DOI = "10714387"
 Z_AR6_DOI = "6382554"
-Z_WANG_SUN_DOI = "7898409"
 
 # #########
 # DOWNLOADS
