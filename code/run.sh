@@ -27,4 +27,4 @@ run_nb 5-generate-manuscript-content -p DR 0.015
 run_nb 5-generate-manuscript-content -p DR 0.02
 run_nb 5-generate-manuscript-content -p DR 0.03
 
-run_nb 6-gen-fig1.ipynb
+run_nb 6-gen-fig1

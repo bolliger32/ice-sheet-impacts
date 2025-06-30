@@ -1,15 +1,12 @@
-# hash:sha256:fd1cdbc90bcdb699cccb7aa23aa052376644f6b1cfa7a9be556ef32747275f8d
-FROM registry.codeocean.com/codeocean/mambaforge3:22.11.1-4-ubuntu22.04
-# FROM condaforge/mambaforge:22.11.1-4
+FROM registry.codeocean.com/codeocean/py-r:python3.12.8-R4.4.2-JupyterLab4.3.5-RStudiorstudio-server-2024.12.1-563-ubuntu22.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 COPY environment.yml /
 
-RUN conda update --all -y && \
-    conda install python=3.13 && \
-    conda update --all && \
+RUN conda install conda=25 && \
     conda env update -n base -f=/environment.yml && \
+    conda update --all && \
     conda clean -ya
 
 ENV DASK_LABEXTENSION__DEFAULT__WORKERS=16
