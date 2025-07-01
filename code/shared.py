@@ -15,7 +15,7 @@ IS_GMSL = 2.35
 # Output dataset attrs
 HISTORY = """version IS-v0.1: Version associated with Huprikar et al., 2024
 version IS-v0.1.1: Bugfix on SLR in years 2005-2019
-version IS-v0.2: Using 1.5, 2, and 3% discount rates and updated 7.6 movefactor (instead of 8.8)."""
+version IS-v0.2: Using 2% discount rate and updated 7.6 movefactor (instead of 8.8)"""
 AUTHOR = "Ian Bolliger"
 CONTACT = "ian@reask.earth"
 
@@ -72,7 +72,7 @@ PATHS_SURGE_LOOKUP = {}
 for seg in ["seg_adm", "seg"]:
     PATHS_SURGE_LOOKUP[seg] = DIR_INT / f"surge-lookup-{SLIIDERS_VERS}-{seg}.zarr"
 
-PATT_REFA = DIR_INT / f"refA_dr_{{dr}}.zarr"
+PATT_REFA = DIR_INT / f"refA_by_movefactor_{SLIIDERS_VERS}_dr_{{dr}}.zarr"
 
 #########
 # OUTPUTS
