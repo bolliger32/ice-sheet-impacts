@@ -1,34 +1,35 @@
 channels:
     - conda-forge
 dependencies:
-    - bottleneck=1.4.2
+    - bottleneck=1.5.0
     - cachey=0.2.1
     - cartopy=0.24.0
     - colorcet=3.1.0
-    - dask-expr=1.1.19
     - dask-labextension=7.0.0
-    - distributed=2024.11.2
-    - exactextract=0.2.0
-    - flox=0.9.15
-    - gitpython=3.1.43
-    - geopandas=1.0.1
-    - jupyterlab=4.3.1
-    - lz4=4.3.3
-    - matplotlib=3.9.2
-    - netcdf4=1.7.1
-    - numbagg=0.8.2
+    - distributed=2025.5.1
+    - exactextract=0.2.2
+    - flox=0.10.4
+    - gitpython=3.1.44
+    - geopandas=1.1.0
+    - jupyterlab=4.4.3
+    - lz4=4.4.4
+    - matplotlib=3.10.3
+    - netcdf4=1.7.2
+    - numbagg=0.9.0
     - opt_einsum=3.4.0
     - papermill=2.6.0
-    - pint-xarray=0.4
-    - pip=24.3.1
-    - psutil=6.1.0
-    - pyarrow=18.1.0
+    - pint-xarray=0.5.0
+    - pip=25.1.1
+    - psutil=7.0.0
+    - pyarrow=20.0.0
+    - python=3.13
+    - python-cityhash=0.4.8
     - python-snappy=0.7.3
-    - rioxarray=0.17.0
-    - scikit-learn=1.5.2
+    - rioxarray=0.19.0
+    - scikit-learn=1.7.0
     - seaborn=0.13.2
-    - xarray=2024.11.0
-    - zarr=2.18.3
+    - xarray=2025.6.1
+    - zarr=3.0.8
     - pip:
-        - libarchive-c==5.1
-        - python-ciam==v1.3
+        - libarchive-c==5.3
+        - python-ciam==1.4

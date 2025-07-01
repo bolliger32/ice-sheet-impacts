@@ -44,7 +44,7 @@ PATH_PARAMS = Path("params.json")
 PATH_SLIIDERS = DIR_RAW / f"sliiders-{SLIIDERS_VERS}.zarr"
 PATH_SLIIDERS_SEG = DIR_INT / f"sliiders-{SLIIDERS_VERS}-seg.zarr"
 PATH_YPK_HIST = DIR_RAW / "ypk_2000_2020_20240222.parquet"
-PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.zarr"
+PATH_GRIDDED_GDP = DIR_RAW / "wang_and_sun_2020_gdp.tif"
 
 #####
 # SLR
@@ -54,6 +54,8 @@ DIR_SLR_RAW = DIR_RAW / "slr"
 DIR_SLR_AR6_RAW = DIR_SLR_RAW / "ar6"
 PATH_SLR_IS_RAW = DIR_SLR_RAW / "ice-sheet-contributions.parquet"
 PATH_SLR_INT = DIR_INT / "msl-rel-2005-is.zarr"
+PATH_SLR_IS_GRID_ANT_RAW = DIR_SLR_RAW / "sea_ant86.txt"
+PATH_SLR_IS_GRID_GR_RAW = DIR_SLR_RAW / "sea_green44.txt"
 
 #########
 # SPATIAL
@@ -61,7 +63,6 @@ PATH_SLR_INT = DIR_INT / "msl-rel-2005-is.zarr"
 
 PATH_GADM = DIR_RAW / "gadm_410-levels.gpkg"
 PATH_LANDSCAN = DIR_RAW / "landscan-global-2020.tif"
-PATH_ADM1_REGIONS = DIR_INT / "adm1-regions.parquet"
 
 ###########################
 # PYCIAM INTERMEDIATE FILES
@@ -71,19 +72,18 @@ PATHS_SURGE_LOOKUP = {}
 for seg in ["seg_adm", "seg"]:
     PATHS_SURGE_LOOKUP[seg] = DIR_INT / f"surge-lookup-{SLIIDERS_VERS}-{seg}.zarr"
 
-PATH_REFA = DIR_INT / f"refA_by_movefactor_{SLIIDERS_VERS}.zarr"
+PATT_REFA = DIR_INT / f"refA_by_movefactor_{SLIIDERS_VERS}_dr_{{dr}}.zarr"
 
 #########
 # OUTPUTS
 #########
 
-PATH_OUTPUTS = DIR_INT / f"pyCIAM_{RES_VERS}_results.zarr"
+PATT_OUTPUTS = DIR_INT / f"pyCIAM_{RES_VERS}_results_dr_{{dr}}.zarr"
 PATHS_MAPS = {
-    kind: DIR_FIGS / f"SCISM-maps-{kind}.png" for kind in ["absolute", "normalized"]
+    kind: str(DIR_FIGS / "{dr}" / f"SCISM-maps-{kind}.png")
+    for kind in ["absolute", "normalized"]
 }
-OUTPUT_SCISM = DIR_RES / "SCISM.zarr"
-OUTPUT_BASELINE_COSTS = DIR_RES / "baseline-costs.zarr"
-PATH_BOXWHISKER = DIR_FIGS / "SCISM_allSSPIAM_slrAR6_boxplot_optimal.png"
+PATH_BOXWHISKER = str(DIR_FIGS / "{dr}" / "SCISM_allSSPIAM_slrAR6_boxplot_optimal.png")
 
 # Make directories where needed
 for p in [
