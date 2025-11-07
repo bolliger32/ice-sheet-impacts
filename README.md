@@ -1,10 +1,10 @@
-# Quantifying Asymmetries in Flood Area and Population Exposure Between Sea Level Fingerprints of Mass Loss from the Antarctic and Greenland Ice Sheets
+# Quantifying Asymmetries in the Societal Impact of Mass Loss from the Antarctic and Greenland Ice Sheets
 
-This repository provides the code required to produce Figure 1 along with the economic analysis figures (Figures 5-7 and S5-S12), as well as a variety of quantities referenced in the main text, for:
+This repository provides the code required to produce Figure 1 along with the economic analysis figures (Figures 5-7 and S7-S14), as well as a variety of quantities referenced in the main text, for:
 
-Bolliger et al., "Quantifying Asymmetries in Flood Area and Population Exposure Between Sea Level Fingerprints of Melting From the Antarctic and Greenland Ice Sheets," *Authorea*. January 27, 2025. 10.22541/au.173801314.47840038/v1.
+Bolliger et al., "Quantifying Asymmetries in the Societal Impact of Mass Loss from the Antarctic and Greenland Ice Sheets," *Authorea*. November 10, 2025. 10.22541/au.173801314.47840038/v3.
 
-If you are viewing this repository on Github, please also see our Code Ocean capsule (link coming soon), where you will find a mirror of this repository along with data and a computing environment set up to execute the analysis. You may interact with the code via this platform or simply download the data for use on your own platform.
+If you are viewing this repository on Github, please also see our [Code Ocean capsule](https://codeocean.com/capsule/7729468), where you will find a mirror of this repository along with data and a computing environment set up to execute the analysis. You may interact with the code via this platform or simply download the data for use on your own platform.
 
 Code and data associated with all other figures and quantities in the manuscript are located at [https://doi.org/10.5281/zenodo.14567046](https://doi.org/10.5281/zenodo.14567046). The remainder of this README will focus on the analysis included in this repository, while you may find separate instructions for replicating the rest of the study at the aforementioned DOI.
 
