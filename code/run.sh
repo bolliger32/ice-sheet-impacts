@@ -8,9 +8,10 @@ run_nb() {
     OUTPATH=/results/notebook-output/$2/$1.ipynb
     mkdir -p $(dirname "$OUTPATH")
     shift
+    shift
     papermill $NBPATH $OUTPATH \
         --cwd $(dirname "$NBPATH") \
-        "$1"
+        "$@"
 }
 
 run_nb 1-combine-slr-data data-processing
