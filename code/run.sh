@@ -10,7 +10,7 @@ run_nb() {
     shift
     papermill $NBPATH $OUTPATH \
         --cwd $(dirname "$NBPATH") \
-        "$@"
+        "$1"
 }
 
 run_nb 1-combine-slr-data data-processing
